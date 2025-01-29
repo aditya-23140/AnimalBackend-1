@@ -330,3 +330,20 @@ class DeletePetView(APIView):
         pet.delete()
         return Response({"detail": "Pet deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
 
+# Pet Count View
+class GetPetCountView(APIView):
+    def get(self, request):
+        try:
+            pet_count = Pet.objects.count()
+            return Response({"pet_count": pet_count}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# User Count View
+class GetUserCountView(APIView):
+    def get(self, request):
+        try:
+            user_count = get_user_model().objects.count()
+            return Response({"user_count": user_count}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
