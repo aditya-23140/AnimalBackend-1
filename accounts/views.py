@@ -52,6 +52,12 @@ class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+
+        print("Headers:", request.headers)  # Debugging line
+        print("Authenticated User:", request.user)  
+        if request.user.is_anonymous:
+            return Response({"error": "User not authenticated"}, status=401)
+
         user = request.user
         pets = Pet.objects.filter(owner=user)
         return Response({
